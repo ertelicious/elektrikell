@@ -1,16 +1,13 @@
 // import Row from 'react-bootstrap/Row';
 import TargetLow from './TargetLow';
 import TargetHigh from './TargetHigh';
-import { DEFAULT_ACTIVE_BUTTON } from '../Head/constants'; 
+import { DEFAULT_ACTIVE_BUTTON } from '../Head'; 
+
 
 function Footer({ activePrice }) {
-    const getSelectedFooterComponent = () => {
-        return activePrice === DEFAULT_ACTIVE_BUTTON ? <TargetLow /> : <TargetHigh />;
-    };
-
     return (
         <>
-            {getSelectedFooterComponent()}
+            { activePrice === DEFAULT_ACTIVE_BUTTON ? <TargetLow /> : <TargetHigh /> }
         </>
     );
 }
