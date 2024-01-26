@@ -12,6 +12,7 @@ function Info ({ activePrice, setActivePrice }) {
             <div>Current price of electricity is</div>
             <Badge bg={BADGES[0].name}>{BADGES[0].id}</Badge>
         </Col>
+
         <Col>
             <ButtonGroup>
                 {PRICE_BUTTONS.map(({ name, id }) => (
@@ -23,7 +24,11 @@ function Info ({ activePrice, setActivePrice }) {
                 ))}
          </ButtonGroup>
         </Col>
-        <Col></Col>
+
+        <Col className="text-end">
+             <h2>XX.XX</h2>
+             <div>cent / kilowatt-hour</div>
+        </Col>
         </>
     );
 }
