@@ -1,28 +1,32 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button'; // from homework-2
+import Button from 'react-bootstrap/Button'; 
+import Stack from 'react-bootstrap/Stack';
+import { INTERVALS } from './constants';
 
 
-function Intervals() {
+function Intervals({ activeHour, setActiveHour }) {
     return (
-        <>
-        <Row className="justify-content-center align-items-center"> 
-            <Col>
-                <h4>Choose your consumption period</h4>
-            </Col>
-        </Row>
-
         <Row>
             <Col>
-                <Button variant="outline-primary">1h</Button>{' '}
-                <Button variant="outline-primary">2h</Button>{' '}
-                <Button variant="outline-primary">3h</Button>{' '}
-                <Button variant="outline-primary">4h</Button>{' '}
-                <Button variant="outline-primary">6h</Button>{' '}
-                <Button variant="outline-primary">8h</Button>{' '} 
+            <h4 className="text-center">Choose your consumption period</h4>
+                <Stack 
+                    direction="horizontal" 
+                    gap={3} 
+                    className="justify-content-center">
+                        {INTERVALS.map(({id, name}) => (
+                        <Button 
+                            variant="outline-warning" 
+                            key={id} 
+                            active={(activeHour || 1) === id}
+                            onClick={() => setActiveHour(id)}
+                        >
+                            {name}
+                        </Button>
+                    ))}
+                </Stack>
             </Col>
         </Row>
-        </>
     );
 }
 
