@@ -10,20 +10,16 @@ function Range() {
       <Row>
         <Col>
           <Form.Control 
-            placeholder="From"
-            type="text"
+            type="date"
             id="from"
             name="from"
-            data-type="data" 
           />
         </Col>
         <Col>
           <Form.Control 
-            placeholder="Until"
-            type="text"
+            type="date"
             id="until"
-            name="until"
-            data-type="data"   
+            name="until"  
           />
         </Col>
       </Row>
