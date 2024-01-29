@@ -1,5 +1,5 @@
-import { Offcanvas } from "react-bootstrap";
-import SearchForm from "./SearchForm";
+import { Offcanvas } from 'react-bootstrap';
+import SearchForm from './SearchForm';
 
 
 function LeftSidebar({ show, handleClose }) {
