@@ -2,14 +2,14 @@ import { Offcanvas } from 'react-bootstrap';
 import SearchForm from './SearchForm';
 
 
-function LeftSidebar({ show, handleClose }) {
+function LeftSidebar({ show, handleClose, ...formProps }) {
     return (
         <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                <Offcanvas.Title>Search by dates</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                <SearchForm />
+                <SearchForm {...formProps} handleClose={handleClose} />
             </Offcanvas.Body>
       </Offcanvas>
     )
