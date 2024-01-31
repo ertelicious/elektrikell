@@ -1,13 +1,12 @@
 import Logo from './Logo';
 import Info from './Info';
-// import Search from './Search';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
 function Head(props) {
 
-    const { handleOpenSidebar, ...restProps } = props; //деструкт из проперти то, что нам необходимо
+    const { handleOpenSidebar, ...restProps } = props; //деструкт из проперти то, что нам необходимо    
 
     return (
         <>
@@ -17,7 +16,6 @@ function Head(props) {
                         <Logo handleOpenSidebar={handleOpenSidebar} />
                     </Col>
                     <Col>
-                        {/* <Search /> */}
                     </Col>
                 </Col>
             </Row>

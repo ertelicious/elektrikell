@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import { PRICE_BUTTONS, BADGES } from './constants';
+import CurrentPrice from './CurrentPrice';
 
 
 function Info ({ activePrice, setActivePrice }) {
@@ -24,9 +25,12 @@ function Info ({ activePrice, setActivePrice }) {
                 ))}
          </ButtonGroup>
         </Col>
-
-        <Col className="text-end">
+        {/* <Col className="text-end">
              <h2>XX.XX</h2>
+             <div>cent / kilowatt-hour</div>
+        </Col> */}
+        <Col className="text-end">
+             <CurrentPrice />
              <div>cent / kilowatt-hour</div>
         </Col>
         </>
