@@ -17,7 +17,8 @@ function TargetLow(props) {
                 </Col>
             </Row>
             <Row>
-                <Col></Col>
+                <Col>
+                </Col>
             </Row>
             
         </>
