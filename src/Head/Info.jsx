@@ -3,9 +3,23 @@ import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import { PRICE_BUTTONS, BADGES } from './constants';
+import { useEffect, useState } from 'react';
+import { getCurrentPrice } from '../services/apiService';
+import { mwToKw, addTax } from '../utils/priceFormat';
 
 
 function Info ({ activePrice, setActivePrice }) {
+
+    const [currentPrice, setCurrentPrice] = useState(0);
+
+    useEffect(() => {
+        (async() => {
+            // функция которая сразу же запускается
+            const { data } = await getCurrentPrice();
+        setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
+        }) ()
+    }, []);
+
     return (
         <>
         <Col>
@@ -26,7 +40,7 @@ function Info ({ activePrice, setActivePrice }) {
         </Col>
 
         <Col className="text-end">
-             <h2>XX.XX</h2>
+             <h2>{currentPrice}</h2>
              <div>cent / kilowatt-hour</div>
         </Col>
         </>
