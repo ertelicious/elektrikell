@@ -1,6 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Intervals from './Intervals';
+import CountdownRenderer from './CountdownRenderer';
 
 
 function TargetLow(props) {
@@ -18,6 +19,7 @@ function TargetLow(props) {
             </Row>
             <Row>
                 <Col>
+                    <CountdownRenderer />
                 </Col>
             </Row>
             

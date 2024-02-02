@@ -47,7 +47,7 @@ const renderDot = (line) => {
     //передать данные в LineChart. 
 
     return (
-        <Row>
+        <Row className="mt-3">
             <Col> 
                 <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={priceData}>
