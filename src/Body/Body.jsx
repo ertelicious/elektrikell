@@ -10,16 +10,22 @@ import {
     YAxis, 
     Dot,
     Line,
+    ReferenceArea,
     ResponsiveContainer
 } from 'recharts';
 import { getPriceData } from '../services/apiService';
 import { chartDataConvertor } from '../utils';
 import { currentTimeStamp } from '../utils/dates';
+import {  getLowPriceInterval } from '../utils/buildIntervals';
+import lodash from 'lodash';
 
-function Body({ from, until }) {
+
+function Body({ from, until, activeHour }) {
 
 // переменные которые держат данные это useState
-const [priceData, setPriceData] = useState(null);
+const [priceData, setPriceData] = useState([]);
+const [x1, setX1] = useState(0); 
+const [x2, setX2] = useState(0); 
 
 const renderDot = (line) => {
     const {
@@ -39,12 +45,24 @@ const renderDot = (line) => {
   };
 
     useEffect(() => {
-        getPriceData(from, until).then(({ data }) => 
-            setPriceData(chartDataConvertor(data.ee))
-        );
-    }, [from, until]); //получили данные
+        getPriceData(from, until).then(({ data }) => {
+            const priceData = chartDataConvertor(data.ee);
 
-    //передать данные в LineChart. 
+            setPriceData(priceData);
+        }
+        );
+    }, [from, until]); 
+
+
+    useEffect(() => {
+        const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
+
+        if(lowPriceIntervals.length){
+            setX1(lowPriceIntervals[0].index);
+            setX2(lodash.last(lowPriceIntervals).index);
+        }
+    }, [priceData, activeHour]);
+
 
     return (
         <Row className="mt-3">
@@ -55,7 +73,7 @@ const renderDot = (line) => {
                         <XAxis dataKey="hour" interval={1} />
                         <YAxis />
                         <Tooltip />
-                        {/* tolltip -> content from chart 
+                        {/* tooltip -> content from chart 
                         <Tooltip content={renderTooltip} />
 */}
                         <Line 
@@ -63,6 +81,12 @@ const renderDot = (line) => {
                             dataKey="price" 
                             stroke="#8884d8" 
                             dot={renderDot} 
+                        />
+                        <ReferenceArea 
+                            x1={x1} 
+                            x2={x2} 
+                            stroke="red" 
+                            strokeOpacity={0.3} 
                         />
                     </LineChart>
                 </ResponsiveContainer>

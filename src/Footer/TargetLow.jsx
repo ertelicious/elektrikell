@@ -22,7 +22,6 @@ function TargetLow(props) {
             <Row>
                 <Col>
                     <Countdown date={countDownDate}> 
-                    {/* Date.now() is js method */}
                         <div>The time is now!</div>
                     </Countdown>
                 </Col>
