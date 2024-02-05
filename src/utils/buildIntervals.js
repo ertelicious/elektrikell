@@ -9,7 +9,7 @@ export const removePast = (data) => {
 });
 };
 
-// d сам массив
+
 export const getLowPriceInterval = (data, interval) => {
     let minimum = Infinity;
     let result = [];

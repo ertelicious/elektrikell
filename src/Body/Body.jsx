@@ -11,6 +11,7 @@ import {
     Dot,
     Line,
     ReferenceArea,
+    ReferenceLine,
     ResponsiveContainer
 } from 'recharts';
 import { getPriceData } from '../services/apiService';
@@ -26,6 +27,7 @@ function Body({ from, until, activeHour }) {
 const [priceData, setPriceData] = useState([]);
 const [x1, setX1] = useState(0); 
 const [x2, setX2] = useState(0); 
+const [averagePrice, setAveragePrice] = useState(0);
 
 const renderDot = (line) => {
     const {
@@ -44,17 +46,25 @@ const renderDot = (line) => {
     ) : null;
   };
 
+
     useEffect(() => {
         getPriceData(from, until).then(({ data }) => {
             const priceData = chartDataConvertor(data.ee);
 
             setPriceData(priceData);
+
+            // average price
+            const allPrices = priceData.map(priceItem => parseFloat(priceItem.price));
+            const sum = allPrices.reduce((acc, curr) => acc + curr, 0);
+            const average = sum / allPrices.length;
+
+            setAveragePrice(average);
         }
         );
     }, [from, until]); 
 
 
-    useEffect(() => {
+     useEffect(() => {
         const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
 
         if(lowPriceIntervals.length){
@@ -70,12 +80,14 @@ const renderDot = (line) => {
                 <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={priceData}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="hour" interval={1} />
+                        <XAxis 
+                            dataKey="hour" 
+                            interval={1} 
+                        />
                         <YAxis />
                         <Tooltip />
                         {/* tooltip -> content from chart 
-                        <Tooltip content={renderTooltip} />
-*/}
+                        <Tooltip content={renderTooltip} />*/}
                         <Line 
                             type="stepAfter" 
                             dataKey="price" 
@@ -87,6 +99,12 @@ const renderDot = (line) => {
                             x2={x2} 
                             stroke="red" 
                             strokeOpacity={0.3} 
+                        />
+                        <ReferenceLine 
+                            y={averagePrice} 
+                            // label="average" 
+                            stroke="orange" 
+                            strokeDasharray="3 3" 
                         />
                     </LineChart>
                 </ResponsiveContainer>
