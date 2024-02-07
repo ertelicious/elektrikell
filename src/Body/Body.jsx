@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { 
@@ -20,22 +19,28 @@ import { currentTimeStamp } from '../utils/dates';
 import { getLowPriceInterval } from '../utils/buildIntervals';
 import { getAveragePrice } from '../utils/maths';
 import lodash from 'lodash';
+import { ERROR_MESSAGE } from './constants';
 
 
-function Body({ from, until, activeHour }) {
+function Body({ from, until, activeHour , setErrorMessage, setBestUntil }) {
 
 // переменные которые держат данные это useState
 const [priceData, setPriceData] = useState([]);
 const [x1, setX1] = useState(0); 
 const [x2, setX2] = useState(0); 
 
-const renderDot = (line) => {
+const averagePrice = useMemo(() => {
+    return getAveragePrice(priceData);
+}, [priceData]); // принимает функцию и массив зависимостей
+
+
+// useCallback запоминает функцию, а не просто ответ как в useMemo. используется в компонентах
+const renderDot = useCallback((line) => {
     const {
     //   cx, из line можно выделить cx и cy и расчитать как сделать посередине красным
     //   cy,
       payload: { timestamp },
     } = line;
-
     // const cxN = cx +20; // cy 10 
 
     return timestamp === currentTimeStamp() ? (
@@ -44,16 +49,20 @@ const renderDot = (line) => {
         {/* <div></div>  здесь можно вписать класснейм и задизайнить*/}
       </Dot>
     ) : null;
-  };
+  }, []);
 
+  
     useEffect(() => {
-        getPriceData(from, until).then(({ data }) => {
-            const priceData = chartDataConvertor(data.ee);
+        getPriceData(from, until)
+            .then(({ data, success }) => {
+                if(!success) throw new Error();
 
-            setPriceData(priceData);
-        }
-        );
-    }, [from, until]); 
+                const priceData = chartDataConvertor(data.ee);
+
+                setPriceData(priceData);
+            })
+            .catch(() => setErrorMessage(ERROR_MESSAGE));
+    }, [from, until, setErrorMessage]); 
 
 
     useEffect(() => {
@@ -62,8 +71,9 @@ const renderDot = (line) => {
         if(lowPriceIntervals.length){
             setX1(lowPriceIntervals[0].position);
             setX2(lodash.last(lowPriceIntervals).position);
+            setBestUntil(lowPriceIntervals[0].timestamp);
         }
-    }, [priceData, activeHour]);
+    }, [priceData, activeHour, setBestUntil]);
 
 
     return (
@@ -91,7 +101,7 @@ const renderDot = (line) => {
                             strokeOpacity={0.3} 
                         />
                         <ReferenceLine 
-                            y={getAveragePrice(priceData)} 
+                            y={averagePrice} 
                             // label="Average" 
                             stroke="grey" 
                             strokeDasharray="3 3" 

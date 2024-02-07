@@ -2,23 +2,29 @@ import Badge from 'react-bootstrap/Badge';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import { PRICE_BUTTONS, BADGES } from './constants';
+import { PRICE_BUTTONS, BADGES, ERROR_MESSAGE } from './constants';
 import { useEffect, useState } from 'react';
 import { getCurrentPrice } from '../services/apiService';
 import { mwToKw, addTax } from '../utils/priceFormat';
 
 
-function Info ({ activePrice, setActivePrice }) {
+function Info ({ activePrice, setActivePrice, setErrorMessage }) {
 
     const [currentPrice, setCurrentPrice] = useState(0);
 
     useEffect(() => {
-        (async() => {
-            // функция которая сразу же запускается
-            const { data } = await getCurrentPrice();
-        setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
-        }) ()
-    }, []);
+        (async() => { 
+            try {
+                const { data, success } = await getCurrentPrice();
+
+                if(!success) throw new Error();
+
+                setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
+            } catch (error) {
+                setErrorMessage(ERROR_MESSAGE);
+            }    
+        }) ();
+    }, [setErrorMessage]); // setErrorMessage это функция, кот. никогда не изменится, но useEffect все равно в данном случае просит dependency
 
     return (
         <>
