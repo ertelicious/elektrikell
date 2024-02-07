@@ -58,8 +58,8 @@ const renderDot = (line) => {
         const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
 
         if(lowPriceIntervals.length){
-            setX1(lowPriceIntervals[0].index);
-            setX2(lodash.last(lowPriceIntervals).index);
+            setX1(lowPriceIntervals[0].position);
+            setX2(lodash.last(lowPriceIntervals).position);
         }
     }, [priceData, activeHour]);
 

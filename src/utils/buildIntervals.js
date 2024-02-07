@@ -1,11 +1,11 @@
-import moment from 'moment';
+import { currentTimeStamp } from '../utils/dates';
 
 
 //бежит по массиву и убирает то, что находится в прошлом
 // filter возвращает boolean
 export const removePast = (data) => {
     return data.filter(({ timestamp }) => {
-     return moment.unix(timestamp).isAfter(moment());
+        return timestamp >= currentTimeStamp();
 });
 };
 
@@ -17,7 +17,7 @@ export const getLowPriceInterval = (data, interval) => {
     futureData.forEach((_, i) => {
         const dataInterval = futureData.slice(i, interval + i + 1); // диапазон
 
-        if (dataInterval.length < interval) return; // останавливаем на последнем, у кот. нет пары
+        if (dataInterval.length < interval + 1) return; // останавливаем на последнем, у кот. нет пары
 
         const sumInterval = dataInterval.reduce((acc, { price }) => {
             return acc + parseFloat(price);
@@ -34,7 +34,7 @@ export const getLowPriceInterval = (data, interval) => {
     return result.map((r) => {
         return {
             ...r,
-            index: data.findIndex(({ timestamp }) => timestamp === r.timestamp),
+            position: data.findIndex(({ timestamp }) => timestamp === r.timestamp) + 1, //bug fix + 1 and position
         };
     });
 };
