@@ -15,9 +15,9 @@ export const getLowPriceInterval = (data, interval) => {
     let result = [];
     const futureData = removePast(data);
     futureData.forEach((_, i) => {
-        const dataInterval = futureData.slice(i, interval + i + 1); // диапазон
+        const dataInterval = futureData.slice(i, interval + i); // диапазон
 
-        if (dataInterval.length < interval + 1) return; // останавливаем на последнем, у кот. нет пары
+        if (dataInterval.length < interval) return; // останавливаем на последнем, у кот. нет пары
 
         const sumInterval = dataInterval.reduce((acc, { price }) => {
             return acc + parseFloat(price);
@@ -34,7 +34,7 @@ export const getLowPriceInterval = (data, interval) => {
     return result.map((r) => {
         return {
             ...r,
-            position: data.findIndex(({ timestamp }) => timestamp === r.timestamp) + 1, //bug fix + 1 and position
+            position: data.findIndex(({ timestamp }) => timestamp === r.timestamp),
         };
     });
 };
