@@ -20,6 +20,7 @@ import { getLowPriceInterval } from '../utils/buildIntervals';
 import { getAveragePrice } from '../utils/maths';
 import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
+import Preloader from '../Preloader';
 
 
 function Body({ from, until, activeHour , setErrorMessage, setBestUntil }) {
@@ -27,7 +28,8 @@ function Body({ from, until, activeHour , setErrorMessage, setBestUntil }) {
 // переменные которые держат данные это useState
 const [priceData, setPriceData] = useState([]);
 const [x1, setX1] = useState(0); 
-const [x2, setX2] = useState(0); 
+const [x2, setX2] = useState(0);
+const [loading, setLoading] = useState(true);
 
 const averagePrice = useMemo(() => {
     return getAveragePrice(priceData);
@@ -53,6 +55,7 @@ const renderDot = useCallback((line) => {
 
   
     useEffect(() => {
+        setLoading(true);
         getPriceData(from, until)
             .then(({ data, success }) => {
                 if(!success) throw new Error();
@@ -61,7 +64,11 @@ const renderDot = useCallback((line) => {
 
                 setPriceData(priceData);
             })
-            .catch(() => setErrorMessage(ERROR_MESSAGE));
+            .catch(() => setErrorMessage(ERROR_MESSAGE))
+            .finally(() => {
+                setTimeout(() => setLoading(false), 500);
+                // console.log('ok');
+            });
     }, [from, until, setErrorMessage]); 
 
 
@@ -73,13 +80,17 @@ const renderDot = useCallback((line) => {
             setX2(lodash.last(lowPriceIntervals).position);
             setBestUntil(lowPriceIntervals[0].timestamp);
         }
-    }, [priceData, activeHour, setBestUntil]);
-
+    }, [priceData, activeHour, setBestUntil]);     
 
     return (
         <Row className="mt-3">
             <Col> 
-                <ResponsiveContainer width="100%" height={400}>
+                <ResponsiveContainer width="100%" height={400} className="position-relative">
+                     {loading && 
+                        <div className="preloader-overlay">
+                            <Preloader /> 
+                        </div>
+                    }
                     <LineChart data={priceData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="hour" interval={1} />
@@ -106,9 +117,8 @@ const renderDot = useCallback((line) => {
                             stroke="grey" 
                             strokeDasharray="3 3" 
                         />
-
                     </LineChart>
-                </ResponsiveContainer>
+                    </ResponsiveContainer>
             </Col>
         </Row>
     );
