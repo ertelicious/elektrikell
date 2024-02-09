@@ -18,6 +18,7 @@ function App() {
   const [until, setUntil] = useState(getDefaultUntil());
   const [errorMessage, setErrorMessage] = useState(null);
   const [bestUntil, setBestUntil] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); //isLoading - is - ставят на boolean 
 
   const handleCloseSidebar = () => setShowSidebar(false);
   const handleOpenSidebar = () => setShowSidebar(true)
@@ -36,6 +37,7 @@ function App() {
         until={until} 
         setErrorMessage={setErrorMessage}
         setBestUntil={setBestUntil}
+        setIsLoading={setIsLoading}
       />
       <Footer 
         activePrice={activePrice} 
@@ -57,6 +59,7 @@ function App() {
         handleClose={() => setErrorMessage(null)}
       />
       {/* для boolean атрибута можно просто оставить show (и он будет true), вместо show={true} */}
+      {isLoading && <h1>LOADING</h1>}
     </Container>
   );
 }
