@@ -22,7 +22,14 @@ import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
 
 
-function Body({ from, until, activeHour , setErrorMessage, setBestUntil }) {
+function Body({ 
+    from, 
+    until, 
+    activeHour , 
+    setErrorMessage, 
+    setBestUntil, 
+    setIsLoading 
+}) {
 
 // переменные которые держат данные это useState
 const [priceData, setPriceData] = useState([]);
@@ -53,6 +60,7 @@ const renderDot = useCallback((line) => {
 
   
     useEffect(() => {
+
         getPriceData(from, until)
             .then(({ data, success }) => {
                 if(!success) throw new Error();
@@ -61,8 +69,9 @@ const renderDot = useCallback((line) => {
 
                 setPriceData(priceData);
             })
-            .catch(() => setErrorMessage(ERROR_MESSAGE));
-    }, [from, until, setErrorMessage]); 
+            .catch(() => setErrorMessage(ERROR_MESSAGE))
+            .finally(() => setIsLoading(false));
+    }, [from, until, setErrorMessage, setIsLoading]); 
 
 
     useEffect(() => {
