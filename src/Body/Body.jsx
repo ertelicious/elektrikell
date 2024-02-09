@@ -79,7 +79,7 @@ const renderDot = useCallback((line) => {
 
         if(lowPriceIntervals.length){
             setX1(lowPriceIntervals[0].position);
-            setX2(lodash.last(lowPriceIntervals).position);
+            setX2(lodash.last(lowPriceIntervals).position + 1);
             setBestUntil(lowPriceIntervals[0].timestamp);
         }
     }, [priceData, activeHour, setBestUntil]);
