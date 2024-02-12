@@ -13,6 +13,9 @@ function Navigation() {
                     <Link to="/" className="nav-link">Home</Link>
                     <Link to="/about" className="nav-link">About</Link>
                     <Link to="/lowprice/8" className="nav-link">Low price 8h</Link>
+                    <Link to="/about/me" className="nav-link">About me</Link>
+                    <Link to="/about/gamma" className="nav-link">Gamma Intelligence</Link>
+
                 </Nav>
             </Container>
         </Navbar>
