@@ -20,12 +20,10 @@ import { getLowPriceInterval } from '../utils/buildIntervals';
 import { getAveragePrice } from '../utils/maths';
 import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
+import { useSelector } from 'react-redux';
 
 
-function Body({ 
-    from, 
-    until, 
-    activeHour , 
+function Body({  
     setErrorMessage, 
     setBestUntil, 
     setIsLoading 
@@ -35,6 +33,11 @@ function Body({
 const [priceData, setPriceData] = useState([]);
 const [x1, setX1] = useState(0); 
 const [x2, setX2] = useState(0); 
+
+const activeHour = useSelector((state) => state.main.activeHour);
+const from = useSelector((state) => state.date.from);
+const until = useSelector((state) => state.date.until);
+
 
 const averagePrice = useMemo(() => {
     return getAveragePrice(priceData);

@@ -6,11 +6,16 @@ import { PRICE_BUTTONS, BADGES, ERROR_MESSAGE } from './constants';
 import { useEffect, useState } from 'react';
 import { getCurrentPrice } from '../services/apiService';
 import { mwToKw, addTax } from '../utils/priceFormat';
+import { useSelector, useDispatch } from 'react-redux';
+import { setActivePrice } from '../services/stateService';
 
 
-function Info ({ activePrice, setActivePrice, setErrorMessage }) {
+function Info ({ setErrorMessage }) {
+    // сначала инициализируем диспатч, и хук возвращает функцию и нужно в эту функцию дать экшн редакса
+    const dispatch = useDispatch();
 
     const [currentPrice, setCurrentPrice] = useState(0);
+    const activePrice = useSelector((state) => state.main.activePrice); //redux
 
     useEffect(() => {
         (async() => { 
@@ -39,7 +44,7 @@ function Info ({ activePrice, setActivePrice, setErrorMessage }) {
                 <Button 
                 key={id}
                 active={activePrice === id} 
-                onClick={() => setActivePrice(id)} 
+                onClick={() => dispatch(setActivePrice(id))} 
                 variant="secondary">{name}</Button>
                 ))}
          </ButtonGroup>

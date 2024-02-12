@@ -2,22 +2,24 @@ import { useState, useEffect } from 'react';
 import './App.scss';
 import Container from 'react-bootstrap/Container'; // доступ только к определённому компоненту
 //import { Container } from 'react-bootstrap'; // доступ ко всем компонентам
-import Head, { DEFAULT_ACTIVE_BUTTON } from './Head';
+// import Head, { DEFAULT_ACTIVE_BUTTON } from './Head'; // not sure
+import Head from './Head';
 import Body from './Body';
 import Footer from './Footer';
 import LeftSidebar from './LeftSidebar';
-import { getDefaultFrom, getDefaultUntil } from './utils/dates';
+// import { getDefaultFrom } from './utils/dates';
 import ErrorModal from './ErrorModal';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setActiveHour } from './services/stateService';
 
 
 function ElectricPrice() {
   const params = useParams(); // for useParams excercise
-  const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
-  const [activeHour, setActiveHour] = useState(1);
+  const dispatch = useDispatch();
+
   const [showSidebar, setShowSidebar] = useState(false);
-  const [from, setFrom] = useState(getDefaultFrom());
-  const [until, setUntil] = useState(getDefaultUntil());
+  // const [from, setFrom] = useState(getDefaultFrom());
   const [errorMessage, setErrorMessage] = useState(null);
   const [bestUntil, setBestUntil] = useState(0);
   const [isLoading, setIsLoading] = useState(true); //isLoading - is - ставят на boolean 
@@ -27,39 +29,27 @@ function ElectricPrice() {
 
   //for useParams excercise
   useEffect(() => { 
-    if(params.hours) setActiveHour(+params.hours);
-  }, [params]);
+    if(params.hours) dispatch(setActiveHour(+params.hours));
+  }, [params, dispatch]);
   
 
   return (
     <Container>
-      <Head 
-        activePrice={activePrice} 
-        setActivePrice={setActivePrice}  
+      <Head   
         handleOpenSidebar={handleOpenSidebar}
         setErrorMessage={setErrorMessage}
       />
-      <Body 
-        activeHour={activeHour} 
-        from={from} 
-        until={until} 
+      <Body  
         setErrorMessage={setErrorMessage}
         setBestUntil={setBestUntil}
         setIsLoading={setIsLoading}
       />
       <Footer 
-        activePrice={activePrice} 
-        activeHour={activeHour} 
-        setActiveHour={setActiveHour} 
         bestUntil={bestUntil}
       />
       <LeftSidebar 
         show={showSidebar} 
         handleClose={handleCloseSidebar} 
-        from={from} 
-        until={until}
-        setFrom={setFrom}
-        setUntil={setUntil}
       />
       <ErrorModal 
         show={!!errorMessage}
