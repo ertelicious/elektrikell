@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 function Logo ({ handleOpenSidebar }) {
     return (
         <>
-            <Col>Logo</Col>
+            {/* <Col>Logo</Col> */}
             <Col>
                 <Button 
                     variant="primary" 

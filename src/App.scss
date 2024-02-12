@@ -1,2 +1,33 @@
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
 
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+}
+
+.about-container-ve {
+    background-color: #F8F9FA;
+    border-radius: 25px;
+    margin: 10px;
+    margin-top: 0;
+    padding: 30px;
+    border: 1px solid black;
+}
+
+.btn-close {
+    --bs-btn-close-focus-shadow: none;     
+}
+
+.nav-link {
+    color: black;
+    
+    &:hover {
+        color: rgb(0 0 0 / 80%);
+    }
+}
+
+.nav-pills .nav-link.active {
+  background-color: #343a40; 
+  color: #fff; 
+}

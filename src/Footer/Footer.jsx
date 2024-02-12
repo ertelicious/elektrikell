@@ -1,7 +1,7 @@
-// import Row from 'react-bootstrap/Row';
 import TargetLow from './TargetLow';
 import TargetHigh from './TargetHigh';
 import { DEFAULT_ACTIVE_BUTTON } from '../Head'; 
+import MadeBy from './MadeBy';
 
 
 function Footer({ activePrice, activeHour, setActiveHour, bestUntil }) {
@@ -16,6 +16,7 @@ function Footer({ activePrice, activeHour, setActiveHour, bestUntil }) {
             ) : ( 
                 <TargetHigh /> 
             )}
+            <MadeBy />
         </>
     );
 }
