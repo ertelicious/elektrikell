@@ -18,7 +18,7 @@ function App() {
                 <Route path=":who" element={<About />} />
 
                 {/* 404 error */}
-                <Route path="*" element={<h1>404</h1>} />
+                <Route path="*" element={<h1 className="text-center display-2 mt-4">404</h1>} />
             </Routes>
         </>
     );

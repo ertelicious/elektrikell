@@ -8,9 +8,11 @@ function Navigation() {
     return (
         <Navbar bg="light" data-bs-theme="light">
             <Container>
-                <Navbar.Brand href="#">Elektri Äpp</Navbar.Brand>
+                <Navbar.Brand className="p-2" href="/">
+                    Elektri Äpp
+                </Navbar.Brand>
                 <Nav className="me-auto">
-                    <Link to="/" className="nav-link">Home</Link>
+                    {/* <Link to="/" className="nav-link">Home</Link> */}
                     <Link to="/about" className="nav-link">About</Link>
                     <Link to="/lowprice/8" className="nav-link">Low price 8h</Link>
                     <Link to="/about/me" className="nav-link">About me</Link>

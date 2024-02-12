@@ -15,12 +15,12 @@ function TargetLow(props) {
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col className="mt-5">
                 <Intervals {...props} />
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col className="text-center display-3 mt-4">
                 {bestUntil && (
                     <Countdown date={bestUntil * 1000}> 
                         <div>The time is now!</div>

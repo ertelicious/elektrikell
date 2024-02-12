@@ -2,20 +2,25 @@
 import TargetLow from './TargetLow';
 import TargetHigh from './TargetHigh';
 import { DEFAULT_ACTIVE_BUTTON } from '../Head'; 
+import MadeBy from './MadeBy';
+//redux hook
+import { useSelector } from 'react-redux';
 
 
-function Footer({ activePrice, activeHour, setActiveHour, bestUntil }) {
+function Footer({  bestUntil }) {
+
+    const activePrice = useSelector((state) => state.main.activePrice); //вытягиваем все, но указываем конкретно, что нам нужно
+
     return (
         <>
             { activePrice === DEFAULT_ACTIVE_BUTTON ? ( 
                 <TargetLow 
-                    activeHour={activeHour} 
-                    setActiveHour={setActiveHour} 
                     bestUntil={bestUntil}
                 /> 
             ) : ( 
                 <TargetHigh /> 
             )}
+            <MadeBy />
         </>
     );
 }
