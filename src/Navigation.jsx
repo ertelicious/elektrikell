@@ -15,7 +15,6 @@ function Navigation() {
                     <Link to="/about" className="nav-link">About</Link>
                     {/* <Link to="/about/me" className="nav-link">About dev</Link>
                     <Link to="/about/gamma" className="nav-link">About app</Link> */}
-
                 </Nav>
             </Container>
         </Navbar>
