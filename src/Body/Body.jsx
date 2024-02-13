@@ -56,8 +56,7 @@ const renderDot = useCallback((line) => {
     // const cxN = cx +20; // cy 10 
 
     return timestamp === currentTimeStamp() ? (
-      <Dot {...line}>
-        {/* <div></div> */}
+      <Dot {...line} r={4} fill="red" stroke="red">
         {/* <div></div>  здесь можно вписать класснейм и задизайнить*/}
       </Dot>
     ) : null;
@@ -98,7 +97,7 @@ const renderDot = useCallback((line) => {
         <Row className="mt-3">
             <Col> 
                 <ResponsiveContainer width="100%" height={400}>
-                {isLoading && 
+                    {isLoading && 
                         <div className="preloader-overlay">
                             <Preloader /> 
                         </div>
@@ -117,12 +116,6 @@ const renderDot = useCallback((line) => {
                         {/* tooltip -> content from chart 
                         <Tooltip content={renderTooltip} />
 */}
-                        <Line 
-                            type="stepAfter" 
-                            dataKey="price" 
-                            stroke="#8884d8" 
-                            dot={renderDot} 
-                        />
                         <ReferenceArea 
                             x1={x1} 
                             x2={x2} 
@@ -133,10 +126,16 @@ const renderDot = useCallback((line) => {
                         <ReferenceLine 
                             y={averagePrice} 
                             // label="Average" 
-                            stroke="grey" 
-                            strokeDasharray="3 3" 
+                            stroke="#FFC007" 
+                            // strokeDasharray="3 3" 
                         />
-
+                        <Line 
+                            type="stepAfter" 
+                            dataKey="price" 
+                            stroke="#8884d8" 
+                            dot={renderDot} 
+                            strokeWidth={2}
+                        />
                     </LineChart>
                 </ResponsiveContainer>
             </Col>
