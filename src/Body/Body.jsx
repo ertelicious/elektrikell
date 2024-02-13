@@ -21,18 +21,20 @@ import { getAveragePrice } from '../utils/maths';
 import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
 import { useSelector } from 'react-redux';
+import Preloader from '../Preloader';
 
 
 function Body({  
     setErrorMessage, 
-    setBestUntil, 
-    setIsLoading 
+    setBestUntil,
+    // setIsLoading 
 }) {
 
 // переменные которые держат данные это useState
 const [priceData, setPriceData] = useState([]);
 const [x1, setX1] = useState(0); 
 const [x2, setX2] = useState(0); 
+const [isLoading, setIsLoading] = useState(true);
 
 const activeHour = useSelector((state) => state.main.activeHour);
 const from = useSelector((state) => state.date.from);
@@ -54,15 +56,13 @@ const renderDot = useCallback((line) => {
     // const cxN = cx +20; // cy 10 
 
     return timestamp === currentTimeStamp() ? (
-      <Dot {...line}>
-        <div></div>
-        {/* <div></div>  здесь можно вписать класснейм и задизайнить*/}
-      </Dot>
+      <Dot {...line} r={4} fill="red" stroke="red" />
     ) : null;
   }, []);
 
   
     useEffect(() => {
+        setIsLoading(true);
 
         getPriceData(from, until)
             .then(({ data, success }) => {
@@ -73,7 +73,10 @@ const renderDot = useCallback((line) => {
                 setPriceData(priceData);
             })
             .catch(() => setErrorMessage(ERROR_MESSAGE))
-            .finally(() => setIsLoading(false));
+            // .finally(() => setIsLoading(false));
+            setTimeout(() => setIsLoading(false), 500);
+                // console.log('ok');
+           
     }, [from, until, setErrorMessage, setIsLoading]); 
 
 
@@ -92,33 +95,46 @@ const renderDot = useCallback((line) => {
         <Row className="mt-3">
             <Col> 
                 <ResponsiveContainer width="100%" height={400}>
+                    {isLoading && 
+                        <div className="preloader-overlay">
+                            <Preloader /> 
+                        </div>
+                    }
                     <LineChart data={priceData}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="hour" interval={1} />
-                        <YAxis />
+                        <XAxis 
+                            dataKey="hour"
+                            // branch style-additions 
+                            // should be interval={1} 
+                            interval={0} 
+                            axisLine={false}
+                        />
+                        <YAxis 
+                            axisLine={false}
+                        />
                         <Tooltip />
-                        {/* tooltip -> content from chart 
-                        <Tooltip content={renderTooltip} />
-*/}
+                        {/* <Tooltip content={renderTooltip} /> */}
+                        <ReferenceArea 
+                            x1={x1} 
+                            x2={x2} 
+                            // stroke="#DBEBE3" 
+                            fill="#E3F4E2"
+                            // strokeOpacity={0.3} 
+                        />
+                        <ReferenceLine 
+                            y={averagePrice} 
+                            // label="Average" 
+                            stroke="#FFC007" 
+                            // strokeDasharray="3 3" 
+                        />
                         <Line 
                             type="stepAfter" 
                             dataKey="price" 
                             stroke="#8884d8" 
                             dot={renderDot} 
+                            strokeWidth={2}
+                            isAnimationActive={false}
                         />
-                        <ReferenceArea 
-                            x1={x1} 
-                            x2={x2} 
-                            stroke="red" 
-                            strokeOpacity={0.3} 
-                        />
-                        <ReferenceLine 
-                            y={averagePrice} 
-                            // label="Average" 
-                            stroke="grey" 
-                            strokeDasharray="3 3" 
-                        />
-
                     </LineChart>
                 </ResponsiveContainer>
             </Col>

@@ -42,11 +42,11 @@ function Info ({ setErrorMessage }) {
             <ButtonGroup>
                 {PRICE_BUTTONS.map(({ name, id }) => (
                 <Button 
-                key={id}
-                active={activePrice === id} 
-                onClick={() => dispatch(setActivePrice(id))} 
-                variant="secondary">{name}</Button>
-                ))}
+                    key={id}
+                    active={activePrice === id} 
+                    onClick={() => dispatch(setActivePrice(id))} 
+                    variant="outline-warning">{name}</Button>
+                    ))}
          </ButtonGroup>
         </Col>
 

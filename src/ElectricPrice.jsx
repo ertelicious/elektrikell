@@ -22,12 +22,12 @@ function ElectricPrice() {
   // const [from, setFrom] = useState(getDefaultFrom());
   const [errorMessage, setErrorMessage] = useState(null);
   const [bestUntil, setBestUntil] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); //isLoading - is - ставят на boolean 
+  // const [isLoading, setIsLoading] = useState(true); //isLoading - is - ставят на boolean // hidden in branch style-additions
 
   const handleCloseSidebar = () => setShowSidebar(false);
   const handleOpenSidebar = () => setShowSidebar(true)
 
-  //for useParams excercise
+  //for useParams excercise + redux
   useEffect(() => { 
     if(params.hours) dispatch(setActiveHour(+params.hours));
   }, [params, dispatch]);
@@ -42,7 +42,7 @@ function ElectricPrice() {
       <Body  
         setErrorMessage={setErrorMessage}
         setBestUntil={setBestUntil}
-        setIsLoading={setIsLoading}
+        // setIsLoading={setIsLoading} // hidden in branch style-additions
       />
       <Footer 
         bestUntil={bestUntil}
@@ -57,7 +57,7 @@ function ElectricPrice() {
         handleClose={() => setErrorMessage(null)}
       />
       {/* для boolean атрибута можно просто оставить show (и он будет true), вместо show={true} */}
-      {isLoading && <h1>LOADING</h1>}
+      {/* {isLoading && <h1>LOADING</h1>} */}
     </Container>
   );
 }
