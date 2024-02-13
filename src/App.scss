@@ -9,3 +9,25 @@ body {
 .btn-close {
     --bs-btn-close-focus-shadow: none;     
 }
+
+.about-container-ve {
+    background-color: #F8F9FA;
+    border-radius: 25px;
+    margin: 10px;
+    margin-top: 0;
+    padding: 30px;
+    border: 1px solid black;
+}
+
+.nav-link {
+    color: black;
+
+    &:hover {
+        color: rgb(0 0 0 / 80%);
+    }
+}
+
+.nav-pills .nav-link.active {
+  background-color: #343a40; 
+  color: #fff; 
+}
