@@ -56,9 +56,7 @@ const renderDot = useCallback((line) => {
     // const cxN = cx +20; // cy 10 
 
     return timestamp === currentTimeStamp() ? (
-      <Dot {...line} r={4} fill="red" stroke="red">
-        {/* <div></div>  здесь можно вписать класснейм и задизайнить*/}
-      </Dot>
+      <Dot {...line} r={4} fill="red" stroke="red" />
     ) : null;
   }, []);
 
@@ -109,13 +107,13 @@ const renderDot = useCallback((line) => {
                             // branch style-additions 
                             // should be interval={1} 
                             interval={0} 
-                            
+                            axisLine={false}
                         />
-                        <YAxis />
+                        <YAxis 
+                            axisLine={false}
+                        />
                         <Tooltip />
-                        {/* tooltip -> content from chart 
-                        <Tooltip content={renderTooltip} />
-*/}
+                        {/* <Tooltip content={renderTooltip} /> */}
                         <ReferenceArea 
                             x1={x1} 
                             x2={x2} 
@@ -135,6 +133,7 @@ const renderDot = useCallback((line) => {
                             stroke="#8884d8" 
                             dot={renderDot} 
                             strokeWidth={2}
+                            isAnimationActive={false}
                         />
                     </LineChart>
                 </ResponsiveContainer>

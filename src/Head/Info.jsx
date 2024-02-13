@@ -45,7 +45,7 @@ function Info ({ setErrorMessage }) {
                 key={id}
                 active={activePrice === id} 
                 onClick={() => dispatch(setActivePrice(id))} 
-                variant="secondary">{name}</Button>
+                variant="outline-warning">{name}</Button>
                 ))}
          </ButtonGroup>
         </Col>
