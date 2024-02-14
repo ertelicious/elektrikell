@@ -1,31 +1,17 @@
 import Logo from './Logo';
 import Info from './Info';
-// import Search from './Search';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 
-function Head(props) {
-
-    const { handleOpenSidebar, ...restProps } = props; //деструкт из проперти то, что нам необходимо
+function Head() {
 
     return (
         <>
             <Row>
-                <Col>
-                    <Col>
-                        <Logo handleOpenSidebar={handleOpenSidebar} />
-                    </Col>
-                    <Col>
-                        {/* <Search /> */}
-                    </Col>
-                </Col>
+                <Logo />
             </Row>
             <Row>
-                <Info {...restProps} />
-            </Row>
-            <Row>
-                
+                <Info />
             </Row>
         </>
     );

@@ -1,8 +1,15 @@
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { setShowSidebar } from "../services/stateService";
+import { useDispatch } from 'react-redux'
 
+function Logo () {
 
-function Logo ({ handleOpenSidebar }) {
+    const dispatch = useDispatch();
+    const handleOpenSidebar = () => {
+        dispatch(setShowSidebar(true));
+    };
+    
     return (
         <>
             {/* <Col>Logo</Col> */}
