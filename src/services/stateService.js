@@ -7,6 +7,10 @@ const initialState = {
     // изначальное состояние
     activePrice: DEFAULT_ACTIVE_BUTTON, 
     activeHour: 1,
+    showSidebar: false,
+    errorMessage: null,
+    bestUntil: 0,
+    // isLoading: true,
 }
 
 
@@ -19,6 +23,10 @@ const initialDateState = {
 // в редаксе функции, которые изменяют состояние называются action
 export const setActivePrice = createAction('setActivePrice');
 export const setActiveHour = createAction('setActiveHour');
+export const setShowSidebar = createAction('setShowSidebar');
+export const setErrorMessage = createAction('setErrorMessage');
+export const setBestUntil = createAction('setBestUntil');
+// export const setIsLoading = createAction('setIsLoading');
 
 
 //вспомогательная функция редьюсер которая теперь выстраивает логику того, объединяет. объясняет реакту что изнач состояние и функция вместе работают
@@ -37,13 +45,25 @@ const main = createReducer(initialState, (builder) => {
     })
     .addCase(setActiveHour, (state, action) => {
         state.activeHour = action.payload;
+    })
+    .addCase(setShowSidebar, (state, action) => {
+        state.showSidebar = action.payload;
+    })
+    .addCase(setErrorMessage, (state, action) => {
+        state.errorMessage = action.payload;
+    })
+    .addCase(setBestUntil, (state, action) => {
+        state.bestUntil = action.payload;
     });
+    // .addCase(setIsLoading, (state, action) => {
+        // state.isLoading = action.payload;
+    // });
 });
 
 // по сути мы сами объясняем редусеру, что нужно поменять состояние при этом экшене
 // можно написать любую логику в редусер дополнительно
 
-//в к онце все оборачивается в storage. по сути самый главный объект редакса, где все хранится.туда передаем редусер. для этого нам нужна еще одна функиця configureStore
+//в конце все оборачивается в storage. по сути самый главный объект редакса, где все хранится.туда передаем редусер. для этого нам нужна еще одна функиця configureStore
 
 const dateSlice = createSlice({
     name: "date",

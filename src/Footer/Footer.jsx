@@ -7,16 +7,14 @@ import MadeBy from './MadeBy';
 import { useSelector } from 'react-redux';
 
 
-function Footer({  bestUntil }) {
+function Footer() {
 
     const activePrice = useSelector((state) => state.main.activePrice); //вытягиваем все, но указываем конкретно, что нам нужно
 
     return (
         <>
             { activePrice === DEFAULT_ACTIVE_BUTTON ? ( 
-                <TargetLow 
-                    bestUntil={bestUntil}
-                /> 
+                <TargetLow /> 
             ) : ( 
                 <TargetHigh /> 
             )}

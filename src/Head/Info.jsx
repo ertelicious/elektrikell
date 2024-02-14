@@ -7,11 +7,11 @@ import { useEffect, useState } from 'react';
 import { getCurrentPrice } from '../services/apiService';
 import { mwToKw, addTax } from '../utils/priceFormat';
 import { useSelector, useDispatch } from 'react-redux';
-import { setActivePrice } from '../services/stateService';
+import { setActivePrice, setErrorMessage } from '../services/stateService';
 
 
-function Info ({ setErrorMessage }) {
-    // сначала инициализируем диспатч, и хук возвращает функцию и нужно в эту функцию дать экшн редакса
+function Info () {
+
     const dispatch = useDispatch();
 
     const [currentPrice, setCurrentPrice] = useState(0);
@@ -26,10 +26,10 @@ function Info ({ setErrorMessage }) {
 
                 setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
             } catch (error) {
-                setErrorMessage(ERROR_MESSAGE);
+                dispatch(setErrorMessage(ERROR_MESSAGE));
             }    
         }) ();
-    }, [setErrorMessage]); // setErrorMessage это функция, кот. никогда не изменится, но useEffect все равно в данном случае просит dependency
+    }, [dispatch]); // setErrorMessage это функция, кот. никогда не изменится, но useEffect все равно в данном случае просит dependency
 
     return (
         <>

@@ -2,10 +2,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Intervals from './Intervals';
 import Countdown from 'react-countdown';
+import { useSelector } from 'react-redux';
 
+function TargetLow() {
 
-function TargetLow(props) {
-    const { bestUntil } = props;
+    const bestUntil = useSelector((state) => state.main.bestUntil);
 
     return(
         <>
@@ -16,7 +17,7 @@ function TargetLow(props) {
             </Row>
             <Row>
                 <Col className="mt-5">
-                <Intervals {...props} />
+                <Intervals />
                 </Col>
             </Row>
             <Row>
