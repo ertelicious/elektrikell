@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { 
@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Preloader from '../Preloader';
 import { setErrorMessage, setBestUntil } from '../services/stateService';
 // import { setIsLoading } from '../services/stateService';
+import { ElectricPriceContext } from '../contexts/ElectricPriceContext';
 
 
 function Body() {
@@ -35,15 +36,12 @@ const [x1, setX1] = useState(0);
 const [x2, setX2] = useState(0); 
 const [isLoading, setIsLoading] = useState(true);
 
+//useContext react
+const { actions, values } = useContext(ElectricPriceContext);
+
 const activeHour = useSelector((state) => state.main.activeHour);
 const from = useSelector((state) => state.date.from);
 const until = useSelector((state) => state.date.until);
-
-
-const averagePrice = useMemo(() => {
-    return getAveragePrice(priceData);
-}, [priceData]); // принимает функцию и массив зависимостей
-
 
 // useCallback запоминает функцию, а не просто ответ как в useMemo. используется в компонентах
 const renderDot = useCallback((line) => {
@@ -70,13 +68,16 @@ const renderDot = useCallback((line) => {
                 const priceData = chartDataConvertor(data.ee);
 
                 setPriceData(priceData);
+
+                getAveragePrice(priceData);
+
+                actions.setAveragePrice(getAveragePrice(priceData));
+
             })
             .catch(() => dispatch(setErrorMessage(ERROR_MESSAGE)))
-            // .finally(() => setIsLoading(false));
             setTimeout(() => setIsLoading(false), 500);
-                // console.log('ok');
            
-    }, [from, until, dispatch, setIsLoading]); 
+    }, [from, until, dispatch, setIsLoading, actions]); 
 
 
     useEffect(() => {
@@ -121,7 +122,7 @@ const renderDot = useCallback((line) => {
                             // strokeOpacity={0.3} 
                         />
                         <ReferenceLine 
-                            y={averagePrice} 
+                            y={values.averagePrice} 
                             // label="Average" 
                             stroke="#FFC007" 
                             // strokeDasharray="3 3" 

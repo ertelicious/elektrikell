@@ -3,16 +3,20 @@ import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import { PRICE_BUTTONS, BADGES, ERROR_MESSAGE } from './constants';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { getCurrentPrice } from '../services/apiService';
 import { mwToKw, addTax } from '../utils/priceFormat';
 import { useSelector, useDispatch } from 'react-redux';
 import { setActivePrice, setErrorMessage } from '../services/stateService';
+import { ElectricPriceContext } from '../contexts/ElectricPriceContext';
 
 
 function Info () {
 
     const dispatch = useDispatch();
+
+    const { values } = useContext(ElectricPriceContext);
+    console.log(values.averagePrice);
 
     const [currentPrice, setCurrentPrice] = useState(0);
     const activePrice = useSelector((state) => state.main.activePrice); //redux
