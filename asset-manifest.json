@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/elektrikell/static/css/main.dcf3264e.css",
+    "main.js": "/elektrikell/static/js/main.cd8fb8ab.js",
+    "index.html": "/elektrikell/index.html",
+    "main.dcf3264e.css.map": "/elektrikell/static/css/main.dcf3264e.css.map",
+    "main.cd8fb8ab.js.map": "/elektrikell/static/js/main.cd8fb8ab.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dcf3264e.css",
+    "static/js/main.cd8fb8ab.js"
+  ]
+}
