@@ -12,10 +12,10 @@ function App() {
                     path="/" // homepage
                     element={<ElectricPrice />} // какой компонент будет homepage'ом
                 />
-                <Route path="lowprice/:hours" element={<ElectricPrice />} />
+                {/* <Route path="lowprice/:hours" element={<ElectricPrice />} /> */}
                 <Route path="/about" element={<About />} />
                 {/* делаем id. для этого нам нужно два роута */}
-                <Route path=":who" element={<About />} />
+                {/* <Route path=":who" element={<About />} /> */}
 
                 {/* 404 error */}
                 <Route path="*" element={<h1 className="text-center display-2 mt-4">404</h1>} />
