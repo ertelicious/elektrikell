@@ -9,7 +9,7 @@ function App() {
             <Navigation />
             <Routes>
                 <Route
-                    path="/" // homepage
+                    path="/" // homepage (см в navigation)
                     element={<ElectricPrice />} // какой компонент будет homepage'ом
                 />
                 {/* <Route path="lowprice/:hours" element={<ElectricPrice />} /> */}

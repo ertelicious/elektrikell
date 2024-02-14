@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
+    <BrowserRouter basename="/elektrikell">
     {/* оборачиваем наш app компонентом редакса */}
         <Provider store={store}>
             <App />
