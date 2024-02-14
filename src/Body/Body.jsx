@@ -20,17 +20,15 @@ import { getLowPriceInterval } from '../utils/buildIntervals';
 import { getAveragePrice } from '../utils/maths';
 import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Preloader from '../Preloader';
+import { setErrorMessage, setBestUntil } from '../services/stateService';
 
 
-function Body({  
-    setErrorMessage, 
-    setBestUntil,
-    // setIsLoading 
-}) {
+function Body() {
 
-// переменные которые держат данные это useState
+const dispatch = useDispatch();
+
 const [priceData, setPriceData] = useState([]);
 const [x1, setX1] = useState(0); 
 const [x2, setX2] = useState(0); 
@@ -43,7 +41,7 @@ const until = useSelector((state) => state.date.until);
 
 const averagePrice = useMemo(() => {
     return getAveragePrice(priceData);
-}, [priceData]); // принимает функцию и массив зависимостей
+}, [priceData]); 
 
 
 // useCallback запоминает функцию, а не просто ответ как в useMemo. используется в компонентах
@@ -72,12 +70,9 @@ const renderDot = useCallback((line) => {
 
                 setPriceData(priceData);
             })
-            .catch(() => setErrorMessage(ERROR_MESSAGE))
-            // .finally(() => setIsLoading(false));
+            .catch(() => dispatch(setErrorMessage(ERROR_MESSAGE)))
             setTimeout(() => setIsLoading(false), 500);
-                // console.log('ok');
-           
-    }, [from, until, setErrorMessage, setIsLoading]); 
+    }, [from, until, dispatch, setIsLoading]); 
 
 
     useEffect(() => {
@@ -86,9 +81,9 @@ const renderDot = useCallback((line) => {
         if(lowPriceIntervals.length){
             setX1(lowPriceIntervals[0].position);
             setX2(lodash.last(lowPriceIntervals).position + 1);
-            setBestUntil(lowPriceIntervals[0].timestamp);
+            dispatch(setBestUntil(lowPriceIntervals[0].timestamp));
         }
-    }, [priceData, activeHour, setBestUntil]);
+    }, [priceData, activeHour, dispatch]);
 
 
     return (
@@ -104,8 +99,6 @@ const renderDot = useCallback((line) => {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis 
                             dataKey="hour"
-                            // branch style-additions 
-                            // should be interval={1} 
                             interval={0} 
                             axisLine={false}
                         />
@@ -117,15 +110,12 @@ const renderDot = useCallback((line) => {
                         <ReferenceArea 
                             x1={x1} 
                             x2={x2} 
-                            // stroke="#DBEBE3" 
                             fill="#E3F4E2"
-                            // strokeOpacity={0.3} 
                         />
                         <ReferenceLine 
                             y={averagePrice} 
                             // label="Average" 
                             stroke="#FFC007" 
-                            // strokeDasharray="3 3" 
                         />
                         <Line 
                             type="stepAfter" 

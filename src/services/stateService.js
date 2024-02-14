@@ -7,6 +7,8 @@ const initialState = {
     // изначальное состояние
     activePrice: DEFAULT_ACTIVE_BUTTON, 
     activeHour: 1,
+    errorMessage: null,
+    bestUntil: 0,
 }
 
 
@@ -19,6 +21,8 @@ const initialDateState = {
 // в редаксе функции, которые изменяют состояние называются action
 export const setActivePrice = createAction('setActivePrice');
 export const setActiveHour = createAction('setActiveHour');
+export const setErrorMessage = createAction('setErrorMessage');
+export const setBestUntil = createAction('setBestUntil');
 
 
 //вспомогательная функция редьюсер которая теперь выстраивает логику того, объединяет. объясняет реакту что изнач состояние и функция вместе работают
@@ -37,6 +41,12 @@ const main = createReducer(initialState, (builder) => {
     })
     .addCase(setActiveHour, (state, action) => {
         state.activeHour = action.payload;
+    })
+    .addCase(setErrorMessage, (state, action) => {
+        state.errorMessage = action.payload;
+    })
+    .addCase(setBestUntil, (state, action) => {
+        state.bestUntil = action.payload;
     });
 });
 

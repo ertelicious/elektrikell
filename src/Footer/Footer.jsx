@@ -3,13 +3,13 @@ import TargetLow from './TargetLow';
 import TargetHigh from './TargetHigh';
 import { DEFAULT_ACTIVE_BUTTON } from '../Head'; 
 import MadeBy from './MadeBy';
-//redux hook
 import { useSelector } from 'react-redux';
 
 
-function Footer({  bestUntil }) {
+function Footer() {
 
-    const activePrice = useSelector((state) => state.main.activePrice); //вытягиваем все, но указываем конкретно, что нам нужно
+    const activePrice = useSelector((state) => state.main.activePrice);
+    const bestUntil = useSelector((state) => state.main.bestUntil);
 
     return (
         <>

@@ -11,7 +11,6 @@ function TargetLow(props) {
         <>
             <Row>
                 <Col>
-                    {/* <p>(Target Low)</p> */}
                 </Col>
             </Row>
             <Row>
