@@ -16,10 +16,9 @@ function Info () {
     const dispatch = useDispatch();
 
     const { values } = useContext(ElectricPriceContext);
-    console.log(values.averagePrice);
 
     const [currentPrice, setCurrentPrice] = useState(0);
-    const [priceLevel, setPriceLevel] = useState(0);
+    const [priceLevel, setPriceLevel] = useState(null);
     const activePrice = useSelector((state) => state.main.activePrice); //redux
 
     useEffect(() => {
@@ -31,7 +30,11 @@ function Info () {
 
                 setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
 
-                if (currentPrice > 6) {
+                console.log('average price', values.averagePrice);
+                console.log('current', currentPrice);
+
+
+                if (currentPrice > values.averagePrice) {
                     setPriceLevel(HIGH);
                 } else {
                     setPriceLevel(LOW);
@@ -41,7 +44,7 @@ function Info () {
                 dispatch(setErrorMessage(ERROR_MESSAGE));
             }    
         }) ();
-    }, [dispatch, currentPrice]); 
+    }, [dispatch, currentPrice, values]); 
 
     return (
         <>
