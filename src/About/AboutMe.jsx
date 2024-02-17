@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 function AboutMe() {
-  console.log("AboutMe");
   return (
     <>
       <Container className="my-1 pt-2">

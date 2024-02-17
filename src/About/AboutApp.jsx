@@ -3,7 +3,6 @@ import Row from 'react-bootstrap/Row';
 
 
 function AboutApp() {
-    console.log("AboutApp"); 
     return(
         <>
              <Container className="my-1 pt-2"> 

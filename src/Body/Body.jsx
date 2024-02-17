@@ -37,7 +37,7 @@ const [x2, setX2] = useState(0);
 const [isLoading, setIsLoading] = useState(true);
 
 //useContext react
-const { actions, values } = useContext(ElectricPriceContext);
+const { actions: { setAveragePrice }, values } = useContext(ElectricPriceContext);
 
 const activeHour = useSelector((state) => state.main.activeHour);
 const from = useSelector((state) => state.date.from);
@@ -71,13 +71,13 @@ const renderDot = useCallback((line) => {
 
                 getAveragePrice(priceData);
 
-                actions.setAveragePrice(getAveragePrice(priceData));
+                setAveragePrice(getAveragePrice(priceData));
 
             })
             .catch(() => dispatch(setErrorMessage(ERROR_MESSAGE)))
             setTimeout(() => setIsLoading(false), 500);
            
-    }, [from, until, dispatch, setIsLoading, actions]); 
+    }, [from, until, dispatch, setIsLoading, setAveragePrice]); 
 
 
     useEffect(() => {
